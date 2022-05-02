@@ -2,6 +2,20 @@ import os, sys
 import h5py as h5
 import numpy as np
 
+def Load_Skewers_File( n_file, input_dir, axis_list=[ 'x', 'y', 'z' ], fields_to_load=[ 'HI_density', 'temperature', 'los_velocity' ] ):
+  file_name = input_dir + f'{n_file}_skewers.h5'
+  file = h5.File( file_name, 'r' )
+  data_out = { key:file.attrs[key][0] for key in file.attrs }
+  for field in fields_to_load:
+    skewers = []
+    for axis in axis_list:
+      skewers_axis = file[f'skewers_{axis}'][field][...]
+      skewers.append( skewers_axis )
+    skewers = np.concatenate( skewers )
+    data_out[field] = skewers
+  data_out[f'vel_Hubble'] = file['skewers_x']['vel_Hubble'][...]
+  file.close()
+  return data_out
 
 def load_skewers_single_axis(  n_skewers, skewer_axis,  nSnap, input_dir, set_random_seed=False, print_out=True, ids_to_load=None, load_HeII=False ):
   inFileName = input_dir + f'skewers_{skewer_axis}_{nSnap}.h5'
