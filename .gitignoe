@@ -1,3 +1,4 @@
+.remote-sync.json
+.remote-sync_macos.json
 *.json
 *.pyc
-.remote-sync.json
