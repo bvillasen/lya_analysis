@@ -38,4 +38,4 @@ i, j, = 10, 1024
 skewer_density = slice_density[i, j, :]
 skewer_HI_density = slice_HI_density[i, j, :]
 skewer_los_velocity = slice_los_velocity[i, j, :]
-skewer_temperature[i, j, :]
+skewer_temperature = slice_temepature[i, j, :]
